@@ -7,6 +7,6 @@ data class UserEntity(
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
         val id: Long,
-        val firstName: String,
-        val lastName: String)
+        var firstName: String,
+        var lastName: String)
 

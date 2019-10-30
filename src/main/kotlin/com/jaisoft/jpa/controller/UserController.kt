@@ -54,6 +54,8 @@ class UserController(private val userRepository: UserRepository) {
     @PutMapping("/beer/{id}")
     fun updateBeer(@PathVariable id:Long, @Valid @RequestBody updateUserDto: UpdateUserDto): ResponseEntity<UpdatedUserDto>{
         val userEntity: UserEntity = userRepository.getOne(id)
+        userEntity.firstName = updateUserDto.firstName
+        userEntity.lastName = updateUserDto.lastName
         val updatedUserEntity : UserEntity = userRepository.save(userEntity)
         val updatedUserDto = UpdatedUserDto(updatedUserEntity.id, updatedUserEntity.firstName, updatedUserEntity.lastName)
         return if(updatedUserEntity != null ){
