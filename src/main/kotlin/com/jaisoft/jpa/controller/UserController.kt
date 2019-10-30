@@ -2,6 +2,8 @@ package com.jaisoft.jpa.controller
 import com.jaisoft.jpa.entity.UserEntity
 import com.jaisoft.jpa.dto.CreateUserDto
 import com.jaisoft.jpa.dto.CreatedUserDto
+import com.jaisoft.jpa.dto.UpdateUserDto
+import com.jaisoft.jpa.dto.UpdatedUserDto
 import com.jaisoft.jpa.repository.UserRepository
 import io.swagger.annotations.Api
 import org.springframework.http.ResponseEntity
@@ -39,7 +41,7 @@ class UserController(private val userRepository: UserRepository) {
       fun getBeerById(@PathVariable id: Long): ResponseEntity<CreatedUserDto> {
 
           val userEntity: Optional<UserEntity> = userRepository.findById(id)
-            val createdUserDto = CreatedUserDto(userEntity.get().id, userEntity.get().firstName, userEntity.get().lastName)
+          val createdUserDto = CreatedUserDto(userEntity.get().id, userEntity.get().firstName, userEntity.get().lastName)
           return if(userEntity != null ){
               ResponseEntity.ok(createdUserDto)
           } else {
@@ -49,22 +51,17 @@ class UserController(private val userRepository: UserRepository) {
 
 
 
-    /*@PutMapping("/beer/{id}")
-    fun updateBeer(@PathVariable id:Long, @Valid @RequestBody beerDto: CreatedUserDto): ResponseEntity<BeerDto>{
-
-        var beerData: BeerData = userRepository.getOne(id)
-
-        val updatedBeerData:BeerData = beerData.copy(beerName = beerDto.beerName, beerColour = beerDto.beerColour, alcoholPercentage = beerDto.alcoholPercentage)
-
-        val savedBeerData : BeerData = userRepository.save(updatedBeerData)
-        val beerDto = BeerDto(savedBeerData.id, savedBeerData.beerName, savedBeerData.alcoholPercentage, savedBeerData.beerColour, savedBeerData.beerType.id, savedBeerData.beerType.beerType, savedBeerData.beerType.beerJudgeCertification, savedBeerData.brewery.id, savedBeerData.brewery.breweryName)
-
-        return if(beerDto != null ){
-            ResponseEntity.ok(beerDto)
+    @PutMapping("/beer/{id}")
+    fun updateBeer(@PathVariable id:Long, @Valid @RequestBody updateUserDto: UpdateUserDto): ResponseEntity<UpdatedUserDto>{
+        val userEntity: UserEntity = userRepository.getOne(id)
+        val updatedUserEntity : UserEntity = userRepository.save(userEntity)
+        val updatedUserDto = UpdatedUserDto(updatedUserEntity.id, updatedUserEntity.firstName, updatedUserEntity.lastName)
+        return if(updatedUserEntity != null ){
+            ResponseEntity.ok(updatedUserDto)
         } else {
             ResponseEntity.notFound().build()
         }
 
-    }*/
+    }
 
 }
