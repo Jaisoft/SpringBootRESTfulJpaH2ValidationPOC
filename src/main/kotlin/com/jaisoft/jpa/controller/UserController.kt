@@ -17,7 +17,7 @@ import javax.validation.Valid
 class UserController(private val userRepository: UserRepository) {
 
     @PostMapping("/users")
-    fun createNewBeer(@Valid @RequestBody createUserDto: CreateUserDto) :  ResponseEntity<CreatedUserDto>{
+    fun createUser(@Valid @RequestBody createUserDto: CreateUserDto) :  ResponseEntity<CreatedUserDto>{
        val createdUserEntity =  userRepository.save(UserEntity(0,createUserDto.firstName, createUserDto.lastName))
         val createdUserDto = CreatedUserDto(createdUserEntity.id, createdUserEntity.firstName, createdUserEntity.lastName)
         return if(createdUserEntity != null ){
@@ -29,7 +29,7 @@ class UserController(private val userRepository: UserRepository) {
     }
 
      @GetMapping("/users")
-      fun getBeers(): List<CreatedUserDto> {
+      fun getUsers(): List<CreatedUserDto> {
           return userRepository.findAll().map {
               userEntity ->
               CreatedUserDto(userEntity.id, userEntity.firstName, userEntity.lastName)
@@ -38,7 +38,7 @@ class UserController(private val userRepository: UserRepository) {
 
 
       @GetMapping("/users/{id}")
-      fun getBeerById(@PathVariable id: Long): ResponseEntity<CreatedUserDto> {
+      fun getUserById(@PathVariable id: Long): ResponseEntity<CreatedUserDto> {
 
           val userEntity: Optional<UserEntity> = userRepository.findById(id)
           val createdUserDto = CreatedUserDto(userEntity.get().id, userEntity.get().firstName, userEntity.get().lastName)
@@ -49,10 +49,8 @@ class UserController(private val userRepository: UserRepository) {
           }
       }
 
-
-
-    @PutMapping("/beer/{id}")
-    fun updateBeer(@PathVariable id:Long, @Valid @RequestBody updateUserDto: UpdateUserDto): ResponseEntity<UpdatedUserDto>{
+    @PutMapping("/user/{id}")
+    fun updateUser(@PathVariable id:Long, @Valid @RequestBody updateUserDto: UpdateUserDto): ResponseEntity<UpdatedUserDto>{
         val userEntity: UserEntity = userRepository.getOne(id)
         userEntity.firstName = updateUserDto.firstName
         userEntity.lastName = updateUserDto.lastName
@@ -63,7 +61,5 @@ class UserController(private val userRepository: UserRepository) {
         } else {
             ResponseEntity.notFound().build()
         }
-
     }
-
 }

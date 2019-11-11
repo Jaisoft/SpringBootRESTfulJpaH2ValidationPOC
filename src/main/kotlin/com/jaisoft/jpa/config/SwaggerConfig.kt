@@ -28,7 +28,7 @@ class SwaggerConfig {
         val contact = Contact("Jaime Gómez Moraleda", "https://www.linkedin.com/in/jaime-gómez-8b81a3119", "jaime.gomez.moraleda@gmail.com")
         return ApiInfoBuilder()
             .title("EspringBootRESTfulJpaH2POC")
-            .description("Example Api RESTful with JPA")
+            .description("Example Api RESTful with JPA Pesistence")
             .version("1.0.0")
             .license("Apache 2.0")
             .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0")
